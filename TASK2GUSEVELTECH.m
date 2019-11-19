@@ -3,6 +3,7 @@ Em1 = 141;
 Em2 = 179;
 psi = deg2rad(-50); % тут поменяешь на свое значение угла(буковка пси)
 e1 = Em1/sqrt(2);
+Em2/sqrt(2)
 e2 = (Em2/sqrt(2))*exp(1i*psi);
 disp(e1);
 disp(e2);
@@ -138,17 +139,36 @@ W = comtopres(I(2)*z2)*comtopres(I(3))*c;
 display(W);
 
 %%method of equal generator
-z145 = ((1/z1)+(1/z4)+(1/z5))^(-1);
-ze1 = z3+z145;
-I11 = e1/ze1;
-ze2 = z4+(z3*(z1+z5)/(z1+z3+z5));
-I42 = e2/ze2;
-%U12 = I42 * (z3*(z1+z5))/(z1+z3+z5);
-U12 = e2 - I42*z4;
-I12 = U12/(z1+z3);
-IC = I11+I12;
-Eeg = IC*z1;
+% z145 = ((1/z1)+(1/z4)+(1/z5))^(-1);
+% ze1 = z3+z145;
+% I11 = e1/ze1;
+% ze2 = z4+(z3*(z1+z5)/(z1+z3+z5));
+% I42 = e2/ze2;
+% %U12 = I42 * (z3*(z1+z5))/(z1+z3+z5);
+% U12 = e2 - I42*z4;
+% I12 = U12/(z1+z3);
+% IC = I11+I12;
+% Eeg = IC*z1;
+% ;
+% Zeg = (z3*(z1+z45))/(z1+z3+z45);
+% IE2 = Eeg/(Zeg+z2);
+% display(IE2);
 z45 = z4*z5/(z4+z5);
-Zeg = (z3*(z1+z45))/(z1+z3+z45);
-IE2 = Eeg/(Zeg+z2);
+z15 = z1*z5/(z1+z5);
+
+ze1 = z3+z1+z45;
+I11 = e1/ze1;
+
+ze2 = z4 + (z5*(z3+z1)/(z1+z3+z5));
+I42 = e2/ze2;
+U = I42*(z5*(z3+z1)/(z1+z3+z5));
+I12 = U/(z1+z3);
+
+
+IE = I12 - I11;
+
+
+ze = (z1*(z3+((z4*z5)/(z4+z5))))/(z1+z3+((z4*z5)/(z4+z5)));
+IE2 = z1*IE/(ze+z2);
+
 display(IE2);
