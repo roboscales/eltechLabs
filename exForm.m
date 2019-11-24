@@ -12,5 +12,6 @@ for c=1:length(complex)
         E(c) = sprintf("%4.3f\\bullete^(j%4.3f\\degree)", abs(complex(c)), abs(rad2deg(angle(complex(c)))));     
     end
 end
+display('Eulers Form');
 display(E');
 end
