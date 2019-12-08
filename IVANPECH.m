@@ -143,10 +143,12 @@ hold on;
 compass(U, '--');
 
 %%checking balance of power
-sum1 = (I(1)^2)*z1+(I(2)^2)*z2+(I(3)^2)*z3+(I(4)^2)*z4+(I(5)^2)*z5;
+Iamp = abs(I);
+display(Iamp);
+sum1 = (Iamp(1)^2)*z1+(Iamp(2)^2)*z2+(Iamp(3)^2)*z3+(Iamp(4)^2)*z4+(Iamp(5)^2)*z5;
 display(sum1);
 exForm(sum1);
-sum2 = e1*I(1)+e2*I(2);
+sum2 = e1*conj(I(1))+e2*conj(I(2));
 display(sum2);
 exForm(sum2);
 Pis = real(sum2);
@@ -154,219 +156,88 @@ Qis = imag(sum2);
 Pprost = real(sum1);
 Qprost = imag(sum1);
 
-display(Pis);
-exForm(Pis);
-display(Qis);
-exForm(Qis);
-display('Slagaymie')
-display((I(1)^2)*z1);
-exForm((I(1)^2)*z1);
-display((I(2)^2)*z2);
-exForm((I(2)^2)*z2);
-display((I(3)^2)*z3);
-exForm((I(3)^2)*z3);
-display((I(4)^2)*z4);
-exForm((I(4)^2)*z4);
-display((I(5)^2)*z5);
-exForm((I(5)^2)*z5);
-
-display(e1*I(3));
-exForm(e1*I(3));
-display(e2*I(4));
-exForm(e2*I(4));
-
-display(Pprost);
-exForm(Pprost);
-display(Qprost);
-exForm(Qprost);
+ display(Pis);
+% exForm(Pis);
+ display(Qis);
+% exForm(Qis);
+% display('Slagaymie')
+% display((I(1)^2)*z1);
+% exForm((I(1)^2)*z1);
+% display((I(2)^2)*z2);
+% exForm((I(2)^2)*z2);
+% display((I(3)^2)*z3);
+% exForm((I(3)^2)*z3);
+% display((I(4)^2)*z4);
+% exForm((I(4)^2)*z4);
+% display((I(5)^2)*z5);
+% exForm((I(5)^2)*z5);
+% 
+% display(e1*I(3));
+% exForm(e1*I(3));
+% display(e2*I(4));
+% exForm(e2*I(4));
+% 
+% display(Pprost);
+% exForm(Pprost);
+% display(Qprost);
+% exForm(Qprost);
 
 dQ = 100*(abs(Qis - Qprost)/Qis);
 dP = 100*(abs(Pis - Pprost)/Pis);
 
-display(abs(Qis - Qprost));
-exForm(abs(Qis - Qprost));
-display(abs(Pis - Pprost));
-exForm(abs(Pis - Pprost));
+% display(abs(Qis - Qprost));
+% exForm(abs(Qis - Qprost));
+% display(abs(Pis - Pprost));
+% exForm(abs(Pis - Pprost));
 
 display('Оценки погрешностей:');
 display(dQ);
-exForm(dQ);
+%exForm(dQ);
 display(dP);
-exForm(dP);
+%exForm(dP);
 
 %%what does the AMP and VOLT say
 %%i'm so bored! i want to invent a new function!
-A = comtopres(I(2))*sqrt(2);
+A = comtopres(I(2));
 display(A);
-V = comtopres(I(4)*z4)*sqrt(2);
+V = comtopres(I(4)*z4);
 display(V);
 
-c = cos(atan(imag(I(2)*z2)/real(I(2)*z2)-atan(imag(I(3))/real(I(3)))));
-pc = rad2deg(atan(imag(I(2)*z2)/real(I(2)*z2)-atan(imag(I(3))/real(I(3)))));
+a1 = rad2deg(angle(U(2)));
+a2 = rad2deg(angle(I(3)));
+
+
+pc = a1-a2;
+c = cosd(pc);
+
+
 display(pc);
 
-W = comtopres(I(2)*z2)*comtopres(I(3))*c*2;
-display(comtopres(I(2)*z2));
-display(comtopres(I(3)));
+W = comtopres(I(2)*z2)*comtopres(I(3))*c;
+%display(comtopres(I(2)*z2));
+%display(comtopres(I(3)));
 display(W);
 
 %%method of equal generator
-% z145 = ((1/z1)+(1/z4)+(1/z5))^(-1);
-% ze1 = z3+z145;
-% I11 = e1/ze1;
-% ze2 = z4+(z3*(z1+z5)/(z1+z3+z5));
-% I42 = e2/ze2;
-% %U12 = I42 * (z3*(z1+z5))/(z1+z3+z5);
-% U12 = e2 - I42*z4;
-% I12 = U12/(z1+z3);
-% IC = I11+I12;
-% Eeg = IC*z1;
-% ;
-% Zeg = (z3*(z1+z45))/(z1+z3+z45);
-% IE2 = Eeg/(Zeg+z2);
-% display(IE2);
-z45 = z4*z5/(z4+z5);
-z15 = z1*z5/(z1+z5);
+z45 = (z4*z5)/(z4+z5);
+zq1 = z2+z3+(z4*z5)/(z4+z5);
+I21 = e2/zq1;
+display(I21);
+Eq = -e2+I21*z2;
+display(Eq);
+exForm(Eq);
+zq = (z2*(z3+(z4*z5)/(z4+z5)))/(z2+z3+(z4*z5)/(z4+z5));
+disp('Chislitl');
+exForm(z2*(z3+(z4*z5)/(z4+z5)));
+disp('Znam');
+exForm(z2+z3+(z4*z5)/(z4+z5));
+display(zq);
+exForm(zq);
 
-ze1 = z1+(z2*(z3+z4))/(z2+z3+z4);
-display(ze1);
-I11 = e1/ze1;
-display(I11);
-I41 = (e1-I11*z1)/(z3+z4);
-
-ze2 = z2 + (z1*(z3+z4)/(z1+z3+z4));
-display(ze2);
-I22 = e2/ze2;
-%display(I42);
-U = I42*(z5*(z3+z1)/(z1+z3+z5));
-display(U);
-I42 = (e2-I22*z2)/(z4+z3);
-display(I42);
-
-
-IE = I42 + I41;
-display(IE);
-
-
-ze = (z4*(z3+((z1*z2)/(z1+z2))))/(z4+z3+((z1*z2)/(z1+z2)));
-IE2 = z4*IE/(ze+z5);
-
-display(z1*IE);
-
-display(ze);
-display(z1*(z3+((z4*z5)/(z4+z5))));
-
-display(IE2);
-display(ze+z2);
-Im = zeros(5,1);
-Um = zeros(5,1);
-
-for c = 1:5
-    Im(c) = comtopres(I(c))*sqrt(2);
-end
-
-display(Im);
-
-for c = 1:5
-    Um(c) = comtopres(UOK(c))*sqrt(2);
-end
-
-display(Um);
-
-Ia = zeros(5,1);
-Ua = zeros(5,1);
-
-for c = 1:5
-    Ia(c) = comtopres(I(c));
-end
-
-display(Ia);
-
-for c = 1:5
-    Ua(c) = comtopres(UOK(c));
-end
-
-display(Ua);
-
-Ih = zeros(5,1);
-Uh = zeros(5,1);
-
-for c = 1:5
-    Ih(c) = rad2deg(angle(I(c)));
-end
-
-display(Ih);
-
-for c = 1:5
-    Uh(c) = rad2deg(angle(UOK(c)));
-end
-
-exForm(I);
-
-
-display(Uh);
-
-exForm(UOK);
-
-ze1 = z1+(z2*(z3+z4))/(z2+z3+z4);
-exForm(z2*(z3+z4));
-exForm(z2+z3+z4);
-display(ze1);
-exForm(ze1);
-
-I11 = e1/ze1;
-exForm(e1);
-
-display(I11);
-exForm(I11);
-
-I41 = (e1-I11*z1)/(z3+z4);
-exForm(e1-I11*z1);
-exForm(z3+z4);
-display(I41);
-exForm(I41);
-
-display('Second ist of EDS');
-ze2 = z2 + (z1*(z3+z4)/(z1+z3+z4));
-exForm(z1*(z3+z4));
-exForm(z1+z3+z4);
-display(ze2);
-exForm(ze2);
-disp('Tok22');
-I22 = e2/ze2;
-display(I22);
-exForm(I22);
-
-%display(I42);
-%U = I42*(z5*(z3+z1)/(z1+z3+z5));
-%display(U);
-disp('Iskomiy Tok');
-I42 = (e2-I22*z2)/(z4+z3);
-exForm(e2-I22*z2);
-exForm(z4+z3);
-display(I42);
-exForm(I42);
-
-
-IE = I42 + I41;
-display(IE);
-exForm(IE);
-
-
-ze = (z4*(z3+((z1*z2)/(z1+z2))))/(z4+z3+((z1*z2)/(z1+z2)));
-IE2 = z4*IE/(ze+z5);
-
-display(z4*IE, 'EDS');
-exForm(z4*IE);
-
-disp('PORA');
-exForm(z4*(z3+((z1*z2)/(z1+z2))));
-exForm(z4+z3+((z1*z2)/(z1+z2)));
-
-display(ze);
-exForm(ze);
-display(z1*(z3+((z4*z5)/(z4+z5))));
-
-display(IE2);
-display(ze+z5);
-exForm(ze+z5);
+I1q = (Eq+e1)/(zq+z1);
+disp('Chisl');
+exForm(Eq+e1);
+disp('Znam');
+exForm(zq+z1);
+display(I1q);
+exForm(I1q);

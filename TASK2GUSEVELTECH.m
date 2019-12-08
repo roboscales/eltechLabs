@@ -11,11 +11,11 @@ z2 = 30; %здесь
 z3 = -1i*40; %здесь
 z4 = 50;%здесь
 z5 = -1i*60;%здесь
+z = [1i*10 30 -1i*40 50 1i*60];
 
-
-ZI = [1 -1 -1 0 0; 0 0 1 1 -1; z1 z2 0 0 0; 0 -z2 z3 -z4 0; 0 0 0 z4 z5];%здесь поменяешь на свою матрицу
-sum = e1 - e2;
-E = [0; 0; 0; sum; e2];
+ZI = [1 -1 -1 0 0; 0 0 1 1 -1; -z1 -z2 0 0 0; 0 z2 -z3 z4 0; 0 0 0 -z4 -z5];%здесь поменяешь на свою матрицу
+sum = -e1 + e2;
+E = [0; 0; 0; sum; -e2];
 
 I = linsolve(ZI, E);
 
@@ -25,13 +25,11 @@ display(I);
 
 UOK = zeros(5,1);
 
-UOK(1) = I(1)*z1;
-UOK(2) = I(2)*z2;
-UOK(3) = I(3)*z3;
-UOK(4) = I(4)*z4;
-UOK(5) = I(5)*z5;
+for c=1:5
+    UOK(c) = I(c)*z(c);
+end    
 
-disp(UOK);
+display(UOK);
 
 %Метод контурных токов
 R11 = z1+z2;%here
@@ -180,6 +178,11 @@ display(comtopres(I(2)*z2));
 display(comtopres(I(3)));
 display(W);
 
+%meqg
+zq2 = z4+z5;
+I42 = e2/zq2;
+% eeg = 
+
 %%method of equal generator
 % z145 = ((1/z1)+(1/z4)+(1/z5))^(-1);
 % ze1 = z3+z145;
@@ -195,50 +198,54 @@ display(W);
 % Zeg = (z3*(z1+z45))/(z1+z3+z45);
 % IE2 = Eeg/(Zeg+z2);
 % display(IE2);
-z45 = z4*z5/(z4+z5);
-z15 = z1*z5/(z1+z5);
+% z45 = z4*z5/(z4+z5);
+% z15 = z1*z5/(z1+z5);
+% 
+% ze1 = z3+z1+z45;
+% display(ze1);
+% I11 = e1/ze1;
+% display(I11);
+% 
+% ze2 = z4 + (z5*(z3+z1)/(z1+z3+z5));
+% display(ze2);
+% I42 = e2/ze2;
+% display(I42);
+% U = I42*(z5*(z3+z1)/(z1+z3+z5));
+% display(U);
+% I12 = U/(z1+z3);
+% display(I12);
+% 
+% 
+% IE = I12 - I11;
+% display(IE);
+% 
+% 
+% ze = (z1*(z3+((z4*z5)/(z4+z5))))/(z1+z3+((z4*z5)/(z4+z5)));
+% IE2 = z1*IE/(ze+z2);
+% 
+% display(IE2);
+% 
+% display(z1*IE);
+% 
+% display(ze);
+% display(z1*(z3+((z4*z5)/(z4+z5))));
+% 
+% display(IE2);
+% display(ze+z2);
+% Im = zeros(5,1);
+% Um = zeros(5,1);
 
-ze1 = z3+z1+z45;
-display(ze1);
-I11 = e1/ze1;
-display(I11);
-
-ze2 = z4 + (z5*(z3+z1)/(z1+z3+z5));
-display(ze2);
-I42 = e2/ze2;
-display(I42);
-U = I42*(z5*(z3+z1)/(z1+z3+z5));
-display(U);
-I12 = U/(z1+z3);
-display(I12);
 
 
-IE = I12 - I11;
-display(IE);
-
-
-ze = (z1*(z3+((z4*z5)/(z4+z5))))/(z1+z3+((z4*z5)/(z4+z5)));
-IE2 = z1*IE/(ze+z2);
-
-display(z1*IE);
-
-display(ze);
-display(z1*(z3+((z4*z5)/(z4+z5))));
-
-display(IE2);
-display(ze+z2);
-Im = zeros(5,1);
-Um = zeros(5,1);
-
-for c = 1:5
-    Im(c) = comtopres(I(c))*sqrt(2);
-end
-
-display(Im);
-
-for c = 1:5
-    Um(c) = comtopres(UOK(c))*sqrt(2);
-end
-
-display(Um);
-
+% for c = 1:5
+%     Im(c) = comtopres(I(c))*sqrt(2);
+% end
+% 
+% display(Im);
+% 
+% for c = 1:5
+%     Um(c) = comtopres(UOK(c))*sqrt(2);
+% end
+% 
+% display(Um);
+% 
